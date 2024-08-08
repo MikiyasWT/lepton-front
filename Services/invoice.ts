@@ -1,28 +1,27 @@
 import api from './api';
 
 interface Item {
-    id: string;
-    invoiceId: string;
-    itemId: string;
-    description: string;
-    quantity: number;
-    unit_price: string;
-    total: string;
-    createdAt: string;
-    updatedAt: string;
-  }
-  
-  interface Invoice {
-    id: string;
-    customerId: string;
-    total_amount: string;
-    due_date: string;
-    status: string;
-    createdAt: string;
-    updatedAt: string;
-    items: Item[];
-  }
+  id: string;
+  invoiceId: string;
+  itemId: string;
+  description: string;
+  quantity: number;
+  unit_price: string;
+  total: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
+interface Invoice {
+  id: string;
+  customerName: string;
+  total_amount: string;
+  due_date: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  items: Item[];
+}
 
 // {
 //     "customerId": "06aaa1bd-f525-41c6-b179-ab3999f34394",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface Item {
   id: string;
@@ -22,7 +22,6 @@ interface Invoice {
   updatedAt: string;
   items: Item[];
 }
-
 
 interface Column {
   header: string;
@@ -55,8 +54,14 @@ const Table: React.FC<TableProps> = ({
     { header: "Delete", accessor: "delete" },
   ];
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  };
 
-
+  const shortenValue = (value: string, length: number) => {
+    return value.length > length ? value.substring(0, length) + "..." : value;
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -81,13 +86,19 @@ const Table: React.FC<TableProps> = ({
                   key={colIndex}
                   className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                 >
-                  {row[column.accessor]}
+                  {column.accessor === "id"
+                    ? shortenValue(row[column.accessor], 8)
+                    : column.accessor === "due_date"
+                    ? formatDate(row[column.accessor])
+                    : column.accessor === "status" && row[column.accessor] === "Paid"
+                    ? <span className="bg-green-200 text-green-800 px-2 py-1 rounded">{row[column.accessor]}</span>
+                    : row[column.accessor]}
                 </td>
               ))}
               {/* Action buttons */}
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <button
-                  // onClick={() => onPay(row)}
+                  onClick={() => onPay?.(row)}
                   className="text-blue-600 hover:text-blue-900"
                 >
                   Pay
@@ -95,7 +106,7 @@ const Table: React.FC<TableProps> = ({
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <button
-                  // onClick={() => onEdit(row)}
+                  onClick={() => onEdit?.(row)}
                   className="text-yellow-600 hover:text-yellow-900"
                 >
                   Edit
@@ -103,7 +114,7 @@ const Table: React.FC<TableProps> = ({
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <button
-                  // onClick={() => onDelete(row)}
+                  onClick={() => onDelete?.(row)}
                   className="text-red-600 hover:text-red-900"
                 >
                   Delete
@@ -118,3 +129,4 @@ const Table: React.FC<TableProps> = ({
 };
 
 export default Table;
+

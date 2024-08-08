@@ -41,8 +41,8 @@ const options: ChartOptions<'doughnut'> = {
 
 const MainContentLeft = () => {
     return (
-      <div className="bg-white border-gray-300 py-4 p-2 pb-40 h-screen w-1/4 rounded-xl flex flex-col gap-4">
-        <div className="px-2 py-2 font-light">
+      <div className="bg-white border-gray-300 py-4 p-2 pb-40 h-screen w-1/3 rounded-xl flex flex-col gap-4">
+        <div className="px-2 py-2 font-light text-slate-700">
           <h5 className="text-2xl font-light"> This month statistics:</h5>
           <span className=" font-thin">Tue 14, Nov 2024 14:30 AM</span>
         </div>

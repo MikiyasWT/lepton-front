@@ -17,21 +17,7 @@ const MainContentRight = () => {
 
 
 
-  const columns = [
-    { header: "Invoice ID", accessor: "invoice_id" },
-    { header: "Total Amount", accessor: "amount" },
-    { header: "Status", accessor: "invoice_status" },
-  ];
-  
-  const data = [
-    { invoice_id: 28, amount:125, invoice_status: "Pending" },
-    { invoice_id: 28, amount:125, invoice_status: "Pending" },
-    { invoice_id: 28, amount:125, invoice_status: "Pending" },
-    { invoice_id: 28, amount:125, invoice_status: "Pending" },
-    { invoice_id: 28, amount:125, invoice_status: "Pending" },
-  
-    
-  ];
+
   
   interface Column {
     header: string;
@@ -61,7 +47,7 @@ const MainContentRight = () => {
   
   interface Invoice {
     id: string;
-    customerId: string;
+    customerName: string;
     total_amount: string;
     due_date: string;
     status: string;
@@ -109,7 +95,7 @@ const MainContentRight = () => {
   
     const columns = [
       { header: 'ID', accessor: 'id' },
-      { header: 'Customer ID', accessor: 'customerId' },
+      { header: 'Customer Name', accessor: 'customerName' },
       { header: 'Total Amount', accessor: 'total_amount' },
       { header: 'Due Date', accessor: 'due_date' },
       { header: 'Status', accessor: 'status' },

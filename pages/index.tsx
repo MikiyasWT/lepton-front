@@ -1,14 +1,15 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import MainContentLeft from "@/components/MainContentLeft";
+import MainContentRight from "@/components/MainContentRight";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-<h1  className="font-bold text-6xl text-blue-600">hellow workd</h1>
-    </main>
-  );
+
+
+
+export default  function Dashboard() {
+  return(
+    <><MainContentLeft /><MainContentRight /></>
+  )
 }

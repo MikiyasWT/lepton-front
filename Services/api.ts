@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const api = axios.create({
     
-  baseURL: "https://lepton-backend.onrender.com/api",
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
     // 'Cookie':`token=${getAuthToken()}`

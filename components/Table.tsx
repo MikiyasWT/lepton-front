@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "./Modal";
+
 
 interface Item {
   id: string;
@@ -47,6 +49,26 @@ const Table: React.FC<TableProps> = ({
   onEdit,
   onDelete,
 }) => {
+  const [selectedRow, setSelectedRow] = useState<Row | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePayClick = (row: Row) => {
+    setSelectedRow(row);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedRow(null);
+  };
+
+  const handleConfirmPayment = () => {
+    if (onPay && selectedRow) {
+      onPay(selectedRow);
+    }
+    handleCloseModal();
+  };
+
   // Add the action columns
   const actionColumns = [
     { header: "Pay", accessor: "pay" },
@@ -56,7 +78,10 @@ const Table: React.FC<TableProps> = ({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`;
   };
 
   const shortenValue = (value: string, length: number) => {
@@ -64,9 +89,9 @@ const Table: React.FC<TableProps> = ({
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto max-h-64">
       <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+        <thead className="bg-gray-50 sticky top-0 z-10">
           <tr>
             {columns.concat(actionColumns).map((column, index) => (
               <th
@@ -78,7 +103,7 @@ const Table: React.FC<TableProps> = ({
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white divide-y divide-gray-200 max-h-48 overflow-y-auto">
           {data.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {columns.map((column, colIndex) => (
@@ -86,23 +111,37 @@ const Table: React.FC<TableProps> = ({
                   key={colIndex}
                   className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                 >
-                  {column.accessor === "id"
-                    ? shortenValue(row[column.accessor], 8)
-                    : column.accessor === "due_date"
-                    ? formatDate(row[column.accessor])
-                    : column.accessor === "status" && row[column.accessor] === "Paid"
-                    ? <span className="bg-green-200 text-green-800 px-2 py-1 rounded">{row[column.accessor]}</span>
-                    : row[column.accessor]}
+                  {column.accessor === "id" ? (
+                    shortenValue(row[column.accessor], 8)
+                  ) : column.accessor === "due_date" ? (
+                    formatDate(row[column.accessor])
+                  ) : column.accessor === "status" ? (
+                    row[column.accessor] === "Paid" ? (
+                      <span className="bg-green-200 text-green-800 px-2 py-1 rounded">
+                        {row[column.accessor]}
+                      </span>
+                    ) : row[column.accessor] === "Pending" ? (
+                      "Unpaid"
+                    ) : (
+                      row[column.accessor]
+                    )
+                  ) : (
+                    row[column.accessor]
+                  )}
                 </td>
               ))}
               {/* Action buttons */}
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <button
-                  onClick={() => onPay?.(row)}
-                  className="text-blue-600 hover:text-blue-900"
-                >
-                  Pay
-                </button>
+                {row.status === "Paid" ? (
+                  <span className="text-green-600">Paid</span>
+                ) : (
+                  <button
+                    onClick={() => handlePayClick(row)}
+                    className="text-blue-600 hover:text-blue-900"
+                  >
+                    Pay
+                  </button>
+                )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <button
@@ -124,9 +163,16 @@ const Table: React.FC<TableProps> = ({
           ))}
         </tbody>
       </table>
+
+      {/* Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        rowData={selectedRow}
+        onConfirm={handleConfirmPayment}
+      />
     </div>
   );
 };
 
 export default Table;
-

@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import Modal from "./Modal";
-
+import React from "react";
 
 interface Item {
   id: string;
@@ -49,26 +47,6 @@ const Table: React.FC<TableProps> = ({
   onEdit,
   onDelete,
 }) => {
-  const [selectedRow, setSelectedRow] = useState<Row | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handlePayClick = (row: Row) => {
-    setSelectedRow(row);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedRow(null);
-  };
-
-  const handleConfirmPayment = () => {
-    if (onPay && selectedRow) {
-      onPay(selectedRow);
-    }
-    handleCloseModal();
-  };
-
   // Add the action columns
   const actionColumns = [
     { header: "Pay", accessor: "pay" },
@@ -136,7 +114,7 @@ const Table: React.FC<TableProps> = ({
                   <span className="text-green-600">Paid</span>
                 ) : (
                   <button
-                    onClick={() => handlePayClick(row)}
+                    onClick={() => onPay?.(row)}
                     className="text-blue-600 hover:text-blue-900"
                   >
                     Pay
@@ -163,14 +141,6 @@ const Table: React.FC<TableProps> = ({
           ))}
         </tbody>
       </table>
-
-      {/* Modal */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        rowData={selectedRow}
-        onConfirm={handleConfirmPayment}
-      />
     </div>
   );
 };

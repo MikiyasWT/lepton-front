@@ -1,5 +1,7 @@
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from "next/link";
+import { useState } from "react";
+import { FaBars } from 'react-icons/fa';
+import Image from 'next/image';
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,10 +36,10 @@ const SideBar = () => {
       {/* Sidebar */}
       <div
         className={`fixed z-20 py-4 px-2 inset-y-0 left-0 transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+          isOpen ? "translate-x-0" : "-translate-x-full"
         } md:relative md:translate-x-0 transition-transform duration-300 ease-in-out h-screen w-full md:w-64 lg:w-64 xl:w-64 flex-shrink-0`}
       >
-        <div className="w-full h-full bg-[#171B35] rounded-xl flex flex-col justify-between p-4">
+        <div className="w-full h-full bg-[#171B35] rounded-xl flex flex-col justify-between p-2">
           {/* Close button on the sidebar for small screens */}
           <div className="md:hidden flex justify-end p-2">
             <button onClick={toggleSidebar} className="text-white">
@@ -60,25 +62,54 @@ const SideBar = () => {
 
           {/* Main usable container */}
           <div className="flex-grow">
-            <ul className="space-y-2 text-white">
+            <div className=" w-full h-12 flex flex-row justify-between  mx-2 gap-2 ">
+              {/* Menu Icon */}
+              <div className="flex items-center">
+                <FaBars className="text-white text-xl" />
+              </div>
+
+              {/* Picture Icon */}
+              <div className="w-full flex items-center">
+           
+              {/* <Image
+          src="/hermanos.png" 
+          alt="Your Image Alt Text"
+          width={32} 
+          height={32} 
+          className="w-full"
+        /> */}
+
+<h6 className="font-serif font-thin text-orange-400 text-lg ">Hermanos Technologies</h6>
+              </div>
+            </div>
+            <div className="w-full bg-gray-600 h-[1px] my-2"></div>
+            <ul className="space-y-2 text-white ">
               <li>
                 <Link href="/">
-                  <div className="block px-4 py-2 rounded hover:bg-gray-700">Dashboard</div>
+                  <div className="block px-4 py-2 rounded hover:bg-gray-700">
+                    Dashboard
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link href="/invoices">
-                  <div className="block px-4 py-2 rounded hover:bg-gray-700">Invoices</div>
+                  <div className="block px-4 py-2 rounded hover:bg-gray-700">
+                    Invoices
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link href="/items">
-                  <div className="block px-4 py-2 rounded hover:bg-gray-700">Items</div>
+                  <div className="block px-4 py-2 rounded hover:bg-gray-700">
+                    Items
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link href="/customers">
-                  <div className="block px-4 py-2 rounded hover:bg-gray-700">Customers</div>
+                  <div className="block px-4 py-2 rounded hover:bg-gray-700">
+                    Customers
+                  </div>
                 </Link>
               </li>
             </ul>
@@ -126,15 +157,6 @@ const SideBar = () => {
 };
 
 export default SideBar;
-
-
-
-
-
-
-
-
-
 
 // import { useState } from "react";
 
@@ -243,19 +265,6 @@ export default SideBar;
 // };
 
 // export default SideBar;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { useState } from 'react';
 
